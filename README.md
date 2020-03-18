@@ -6,7 +6,7 @@ This is a repository with R code for a COVID simulation model and interactive Sh
 
 Currently the user controls: intial prevalence and number of age categories. The number of subcategories for I and E, as well as the movement rate among them, which controls the duration of time an individual is exposed or infectious. The user also controls the transmission coefficient, theta = 0 for density or 1 for frequency dependence, a symmetrical matrix of relative contact rates among age classes, initial population size, severity of disease by age class, the number of beds or ICU units, and the proportion of severe cases that die with and without hospital care. 
 
-This is mostly a copy-paste from another model, apologies if there are some typos, weird references, etc.
+This is mostly a copy-paste from a chronic wasting disease model, so apologies if there are some typos, weird references to deer, bucks, fawns, etc.
 
 ### TO DO ###
 1. calculate appropriate parameter values
