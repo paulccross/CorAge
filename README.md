@@ -13,3 +13,27 @@ This is mostly a copy-paste from another model, apologies if there are some typo
 4. fix R0 calculation
 5. add in different interventions by age and time
 6. stochastic version?
+
+### Installation ###
+
+To use this package, you should be using R 3.4+. You can install the package from github using the `remotes` package. Haven't yet built any vignettes. Working on shiny app first
+
+First install remotes
+
+```r
+install.packages("remotes")
+```
+Then 
+```r
+remotes::install_github("https://github.com/paulccross/CorAge.git")
+```
+
+You should then be able to load it with
+```
+library(CorAge)
+```
+### Disclaimer ###
+
+This is very preliminary. The default parameters are not formally estimated in any way, but just entered in a reasonable range to see if the functions are working. I'm doing this on non-work time, so you can reach me here: paulchafeecross@gmail.com
+
+
