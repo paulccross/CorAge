@@ -2,7 +2,9 @@ CorAge
 =====================================================================================
 An R package to run age-based coronavirus models and a Shiny app
 
-This is a repository with R code for COVID simulation models and interactive Shiny applications. Currently there is only one discrete time (daily timestep) deterministic model that is age structured with S, E, I, and R categories. Exposed and Infectious categories are sub-divided into a box-car approach to control to distribution of waiting times in those categories.  
+This is a repository with R code for a COVID simulation model and interactive Shiny application. Currently there is only one discrete time (daily timestep) deterministic model that is age structured with S, E, I, and R categories. Exposed and Infectious categories are sub-divided into a box-car approach to control to distribution of waiting times in those categories. The model tracks number of deaths and hospitalizations by age. 
+
+Currently the user controls: intial prevalence and number of age categories. The number of subcategories for I and E, as well as the movement rate among them, which controls the duration of time an individual is exposed or infectious. The user also controls the transmission coefficient, theta = 0 for density or 1 for frequency dependence, a symmetrical matrix of relative contact rates among age classes, initial population size, severity of disease by age class, the number of beds or ICU units, and the proportion of severe cases that die with and without hospital care. 
 
 This is mostly a copy-paste from another model, apologies if there are some typos, weird references, etc.
 

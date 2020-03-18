@@ -4,7 +4,7 @@
 #'  
 #' @param params A list with the following parameters included: 
 #' 
-#' ini.prev = percentage of fawns infected at the start (scalar value between 0 and 1),  
+#' ini.prev = percentage of individuals infected at the start (scalar value between 0 and 1),  
 #' 
 #' n.age.cats = number of age categories to monitor. Currently makes the most sense to be by decade for 10 categories (must be scalar value greater than 3).
 #' 
