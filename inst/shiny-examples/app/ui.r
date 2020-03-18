@@ -2,10 +2,12 @@
 #'
 #' @import shiny
 
-ui <- fluidPage(navbarPage("CorAge: Age-based coronavirus model",
+ui <- fluidPage(navbarPage(title = "",
                            tabPanel("Description",
-                                    withMathJax(includeHTML("description_combo.html"))),
+                                    withMathJax(includeHTML("description.html"))),
                            tabPanel("Deterministic model",
-                                    det_modUI(id = "det")),
-                          ),
+                                    det_modUI(id = "det"))
+                          )
                 )
+
+

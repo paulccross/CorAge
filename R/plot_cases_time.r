@@ -11,7 +11,7 @@
 #' n.age.cats <- 10
 #' 
 #' params <- list(ini.prev = 0.02, n.age.cats = n.age.cats,  n.e.cats = 10, 
-#' n.i.cats = 10, e.move = 0.4, i.move = 0.4, beta = 0.08, n0 = 10000, 
+#' n.i.cats = 10, e.move = 0.4, i.move = 0.4, beta = 0.08, theta = 1, n0 = 10000, 
 #' n.days = 360, contacts = matrix(1, nrow = n.age.cats, ncol = n.age.cats),
 #' severity = seq(0.01, 0.2, length.out = n.age.cats), d.no = 0.1, d.yes = 0.02,
 #' beds = 20)
@@ -29,19 +29,21 @@ plot_cases_time <- function(dat, total){
   
   if(total == T){
     dat.sum <- dat %>% group_by(day) %>% summarize(n = sum(n))
-    p <- ggplot(dat.sum, aes(day, n)) + geom_line(size = 1.5)
+    p <- ggplot(dat.sum, aes(day, n)) + geom_line(size = 1.5) + 
+    ylab("Total infectious cases")
+      
   }
   
   if(total == F){
     dat.sum <- dat %>% group_by(age, day) %>% summarize(n = sum(n))
     p <- ggplot(dat.sum, aes(day, n, color = as.factor(age))) +
       geom_line(size = 1.5) + 
-      labs(color = "Age category")
+      labs(color = "Age category")+ 
+      ylab("Infectious cases by age")
   }
   
   p <- p  + 
     xlab("Day") + 
-    ylab("Infectious cases") +
     theme_light(base_size = 16) +
     theme(panel.grid.minor = element_blank(),
           panel.grid.major.x = element_blank())

@@ -10,94 +10,43 @@ det_mod_server <- function(input, output, session){
 
   #Create the reactive parameter set and run the model:
   react.params <- reactive({
-    list(fawn.an.sur = input$fawn.an.sur,
-         juv.an.sur = input$juv.an.sur,
-         ad.an.f.sur = input$ad.an.f.sur,
-         ad.an.m.sur = input$ad.an.m.sur,
-
-         fawn.repro = 0,
-         juv.repro = input$juv.repro,
-         ad.repro = input$ad.repro,
-
-         hunt.mort.fawn = input$hunt.mort.fawn,
-         hunt.mort.juv.f = input$hunt.mort.juv.f,
-         hunt.mort.juv.m = input$hunt.mort.juv.m,
-         hunt.mort.ad.f = input$hunt.mort.ad.f,
-         hunt.mort.ad.m = input$hunt.mort.ad.m,
-
-         n.age.cats = 12,
-         p = input$p,
-
-         ini.fawn.prev = input$ini.fawn.prev,
-         ini.juv.prev = input$ini.juv.prev,
-         ini.ad.f.prev = input$ini.ad.f.prev,
-         ini.ad.m.prev = input$ini.ad.m.prev,
-
-         env.foi =  1 - ((1-input$an.env.foi)^(1/12)),
-
-         #calculate beta from r0_female
-         #R0_per year * n^theta-1 / 12 months
-         beta.f = (input$r0_peryear  * input$n0^(input$theta-1))/ 12,
-         beta.m = input$gamma.m *(input$r0_peryear  * input$n0^(input$theta-1))/ 12,
+    list(
+         ini.prev = input$ini.prev,
+         n.age.cats = input$n.age.cats,
+         n.i.cats = input$n.i.cats,
+         n.e.cats = input$n.e.cats,
+         e.move = input$e.move,
+         i.move = input$i.move, 
+         beta = input$beta,
          theta = input$theta,
+         
+         #future change here
+         contacts = matrix(1, nrow = input$n.age.cats, ncol = input$n.age.cats),
+         s.lo = input$s.lo,
+         s.hi = input$s.hi,
+         
          n0 = input$n0,
-         n.years = input$n.years,
-         rel.risk = input$rel.risk)
+         n.days = input$n.days,
+         d.no = input$d.no,
+         d.yes = input$d.yes,
+         beds = input$beds
+         )
   })
 
   simout <- reactive({
     params <- react.params()
-    out <- cwd_det_model(params)
+    # calculate severity vector as an exponential model from lo to hi
+    # based on x_t = x_0(1+r)^t
+    r <- (params$s.hi / params$s.lo)^(1/params$n.age.cats) - 1
+    params$severity <- params$s.lo * (1+r) ^ seq(1,params$n.age.cats, 1)
+    out <- det_model(params)
     out
-  })
-
-  output$R0text1 <- renderUI({
-    out <- simout()
-    str1 <- paste("Female direct transmission R0 = ", round(out$f.R0, 1))
-    str2 <- paste("Male direct transmission R0 = ", round(out$m.R0, 1))
-    HTML(paste(str1, str2, sep="<br/>"))
-  })
-  output$R0text2 <- renderUI({
-    out <- simout()
-    str1 <- paste("Female direct transmission R0 = ", round(out$f.R0, 1))
-    str2 <- paste("Male direct transmission R0 = ", round(out$m.R0, 1))
-    HTML(paste(str1, str2, sep="<br/>"))
-  })
-  output$R0text3 <- renderUI({
-    out <- simout()
-    str1 <- paste("Female direct transmission R0 = ", round(out$f.R0, 1))
-    str2 <- paste("Male direct transmission R0 = ", round(out$m.R0, 1))
-    HTML(paste(str1, str2, sep="<br/>"))
-  })
-  output$R0text4 <- renderUI({
-    out <- simout()
-    str1 <- paste("Female direct transmission R0 = ", round(out$f.R0, 1))
-    str2 <- paste("Male direct transmission R0 = ", round(out$m.R0, 1))
-    HTML(paste(str1, str2, sep="<br/>"))
-  })
-  output$R0text5 <- renderUI({
-    out <- simout()
-    str1 <- paste("Female direct transmission R0 = ", round(out$f.R0, 1))
-    str2 <- paste("Male direct transmission R0 = ", round(out$m.R0, 1))
-    HTML(paste(str1, str2, sep="<br/>"))
-  })
-  output$R0text6 <- renderUI({
-    out <- simout()
-    str1 <- paste("Female direct transmission R0 = ", round(out$f.R0, 1))
-    str2 <- paste("Male direct transmission R0 = ", round(out$m.R0, 1))
-    HTML(paste(str1, str2, sep="<br/>"))
   })
 
   output$TotalPlot <- renderPlot({
     out <- simout()
-    par(cex = 1.5)
-    plot_tots(out$counts)
-  })
-
-  output$PrevPlot <- renderPlot({
-    out <- simout()
-    p1 <- plot_prev_time(out$counts)
-    p2 <- plot_prev_age_end(out$counts)
+    p1 <- plot_totals_time(out$counts)
+    p2 <- plot_prev_time(out$counts)
     plot_grid(p1, p2, nrow = 1)
   })
 
@@ -106,23 +55,31 @@ det_mod_server <- function(input, output, session){
     plot_age_dist(out$counts)
   })
 
-  output$DeathPlot <- renderPlot({
+  output$CasesPlot <- renderPlot({
     out <- simout()
-    p1 <- plot_deaths(out$deaths, percents = F)
-    p2 <- plot_deaths(out$deaths, percents = T)
-    plot_grid(p1, p2, nrow = 2)
+    p1 <- plot_cases_time(out$counts$It, total = T)
+    p2 <- plot_cases_time(out$counts$It, total = F)
+    plot_grid(p1, p2, nrow = 1)
   })
-
+  
+  output$HospitalPlot <- renderPlot({
+    out <- simout()
+    p1 <- plot_hos_time(out$outcomes$Ht, total = T)
+    p2 <- plot_hos_time(out$outcomes$Ht, total = F)
+    plot_grid(p1, p2, nrow = 1)
+  })
+  
+  output$DeathsPlot <- renderPlot({
+    out <- simout()
+    p1 <- plot_deaths_time(out$outcomes$Dt, total = T)
+    p2 <- plot_deaths_time(out$outcomes$Dt, total = F)
+    plot_grid(p1, p2, nrow = 1)
+  })
+  
   output$ParamPlot <- renderPlot({
     params <- react.params()
-    plot_ttd(params$p)
+    plot_periods(e.move = params$e.move, i.move = params$i.move, 
+                 n.e.cats = params$n.e.cats, n.i.cats = params$n.i.cats)
   })
-
-  output$ClassPlot <- renderPlot({
-    out <- simout()
-    p1 <- plot_fawn_doe(out$counts)
-    p2 <- plot_buck_doe(out$counts)
-    p3 <- plot_grid(p1, p2, nrow = 1)
-    p3
-  })
+  
 }

@@ -16,19 +16,22 @@ det_modUI <- function(id) {
       column(width = 4, h4("Parameters"),
             tabsetPanel(
               tabPanel("Disease",
-                       sliderInput(ns("an.env.foi"), "Indirect transmission",
-                                   value = 0, min = 0, max = 0.1, step = 0.01),
-                       sliderInput(ns("r0_peryear"), "Direct R0 per year",
-                                   value = .8, min = .1, max = 1.5, step = .05),
-                       sliderInput(ns("gamma.m"), "Relative male infection",
-                                   value = 2, min = 0.8, max = 5, step = 0.1),
-                       sliderInput(ns("theta"), "Theta",
+                       sliderInput(ns("beta"), "transmission",
+                                   value = 0.4, min = 0, max = 0.7, step = 0.01),
+                       sliderInput(ns("theta"), "FD vs DD transmission",
                                    value = 1, min = 0, max = 1, step = 0.1),
-                       sliderInput(ns("p"), "index of disease mortality",
-                                   value = 0.43, min = 0, max = .9, step = 0.01),
-                       sliderInput(ns("rel.risk"),"Relative hunting risk",
-                                   value = 1, min = 0.1, max = 3, step = 0.1),
-                       includeMarkdown("disease_text.md")),
+                       
+                       sliderInput(ns("s.lo"), "Severity in sub-adults",
+                                   value = 0.01, min = 0.0001, max = .2, step = 0.01),
+                       sliderInput(ns("s.hi"), "Severity in the elderly",
+                                   value = .2, min = 0.05, max = 0.8, step = 0.01),
+                       sliderInput(ns("d.no"), "Daily mortality of non-hospitalized severe cases",
+                                   value = 0.05, min = 0.01, max = .2, step = 0.01),
+                       sliderInput(ns("d.yes"), "Daily mortality of hospitalized severe cases",
+                                   value = 0.01, min = 0, max = .1, step = 0.01),
+                       sliderInput(ns("beds"),"Number of beds for severe cases",
+                                   value = 30, min = 10, max = 1000, step = 10)
+                       ),
               tabPanel("Simulation",
                        sliderInput(ns("n0"),"Initial population size",
                                    value = 100000, min = 1000, max = 500000,step = 1000),
@@ -52,15 +55,19 @@ det_modUI <- function(id) {
             tabsetPanel(
               tabPanel("Totals", plotOutput(ns('TotalPlot'))),
 
-              tabPanel("Prevalence", plotOutput(ns('PrevPlot'))),
+              tabPanel("Infectious Cases", plotOutput(ns('CasesPlot'))),
+              
+              tabPanel("Needed hospitalizations", plotOutput(ns('HospitalPlot'))),
+              
+              tabPanel("Deaths", plotOutput(ns('DeathsPlot'))),
+              
+              tabPanel("Exposed & Infectious Period", plotOutput(ns('ParamPlot'))),
 
-              tabPanel("Deaths", plotOutput(ns('DeathPlot'))),
-
-              tabPanel("Age Distribution", plotOutput(ns('AgePlot'))),
-
-              tabPanel("Parameters", plotOutput(ns('ParamPlot')))
-            ),
+              tabPanel("Age Distribution", plotOutput(ns('AgePlot')))
+              
+              ),
             includeMarkdown("disclaimer.md")
           )
       )
 )}
+

@@ -51,7 +51,7 @@
 #' n.age.cats <- 10
 #' 
 #' params <- list(ini.prev = 0.02, n.age.cats = n.age.cats,  n.e.cats = 10, 
-#' n.i.cats = 10, e.move = 0.4, i.move = 0.4, beta = 0.08, n0 = 10000, 
+#' n.i.cats = 10, e.move = 0.4, i.move = 0.4, beta = 0.08, theta = 1, n0 = 10000, 
 #' n.days = 360, contacts = matrix(1, nrow = n.age.cats, ncol = n.age.cats),
 #' severity = seq(0.01, 0.2, length.out = n.age.cats), d.no = 0.1, d.yes = 0.02,
 #' beds = 20)
@@ -86,6 +86,11 @@ det_model <- function(params) {
   if(exists("beta")==FALSE){
     message("transmission beta is missing, using default value")
     beta <- 0.08
+  }
+  
+  if(exists("theta")==FALSE){
+    message("theta is missing, using default value")
+    theta <- 1
   }
  
   if(exists("n0")==FALSE){
@@ -155,7 +160,7 @@ det_model <- function(params) {
     ini.prev
 
   # calculate R0 (not sure about this)
-  R0 <- (1-exp (-(beta * n0) )) * 
+  R0 <- (1-exp (-(beta * n0) / n0^theta)) * 
     mean(rgamma(1000, n.i.cats, i.move)) 
   # assumes no mortality during infectious period and no effect of 
   # hospitalization or containment
@@ -191,10 +196,11 @@ det_model <- function(params) {
     
     ##### Transmission #####
     I.current <- rowSums(It[ ,t, ]) # current # of I's by age
+    Nall <- sum(St[, t]) + sum(Et[, t, ]) + sum(It[, t, ]) + sum(Rt[, t]) #total
     
     # probably a faster way to do this
     cases <- St[, t] * contacts %*% 
-                       (1 - exp( -(beta * (as.matrix(I.current)))))
+                       (1 - exp( -(beta * (as.matrix(I.current)/ Nall ^ theta))))
     
     St[, t] <- St[, t] - cases
     Et[, t, 1] <- Et[, t, 1] + cases

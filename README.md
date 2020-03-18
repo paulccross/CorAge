@@ -9,12 +9,12 @@ Currently the user controls: intial prevalence and number of age categories. The
 This is mostly a copy-paste from a chronic wasting disease model, so apologies if there are some typos, weird references to deer, bucks, fawns, etc.
 
 ### TO DO ###
-1. calculate appropriate parameter values
-2. compute years of life lost and plot
-3. connect to shiny app
-4. fix R0 calculation
-5. add in different interventions by age and time
-6. stochastic version?
+1. calculate appropriate parameter values  
+2. compute years of life lost and plot  
+3. fix R0 calculation  
+4. calculate the doubling time so that you can dial in beta  
+5. add in different interventions by age and time  
+6. stochastic version?  
 
 ### Installation ###
 
