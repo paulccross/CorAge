@@ -50,11 +50,6 @@ det_mod_server <- function(input, output, session){
     plot_grid(p1, p2, nrow = 1)
   })
 
-  output$AgePlot <- renderPlot({
-    out <- simout()
-    plot_age_dist(out$counts)
-  })
-
   output$CasesPlot <- renderPlot({
     out <- simout()
     p1 <- plot_cases_time(out$counts$It, total = T)
@@ -78,8 +73,16 @@ det_mod_server <- function(input, output, session){
   
   output$ParamPlot <- renderPlot({
     params <- react.params()
-    plot_periods(e.move = params$e.move, i.move = params$i.move, 
+    p1 <- plot_periods(e.move = params$e.move, i.move = params$i.move, 
                  n.e.cats = params$n.e.cats, n.i.cats = params$n.i.cats)
+    p2 <- plot_severity(s.lo = params$s.lo, s.hi = params$s.hi, 
+                        n.age.cats = params$n.age.cats)
+    plot_grid(p1, p2, nrow = 1)
+    
   })
-  
+  output$AgePlot <- renderPlot({
+    out <- simout()
+    plot_age_dist(out$counts)
+  })
+
 }

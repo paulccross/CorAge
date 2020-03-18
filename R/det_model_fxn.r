@@ -123,19 +123,21 @@ det_model <- function(params) {
   #NOTE!!! currently making up these survival and repro values
   #NOTE!!! n.age.cats not fully flexible, best if n.age.cats = 10 (1 for each decade)
   prop.aging <- 1/n.age.cats # proportion that age out of a category (approx.)
-  mort <- rep(0.002, n.age.cats - 3)
-  old.mort <- rep(0.1, 3) # last 3 categories
+  mort <- rep(0.001, n.age.cats - 4)
+  old.mort <- rep(0.1, 4) # last 4 categories
   
   remain <- rep(1, n.age.cats) - prop.aging - c(mort, old.mort)
-  repro <- 0.1
+  repro <- 0.08
 
   # Create the matrix to start the population at stable age dist
+  # Probably should just fix n.age.cats and feed in the current US age dist.
   M <- matrix(rep(0, n.age.cats * n.age.cats), nrow = n.age.cats)
   diag(M) <- remain
   M[row(M) == (col(M) + 1)] <- prop.aging # off diagonal
   M[n.age.cats, n.age.cats] <- 1-old.mort[1] # old category mortality
     
   # insert the fecundity vector for prebirth census
+  # only used for the stable age dist
   M[1, 2:4] <- repro * (1-mort[1]) * 0.5
   
   #lambda(M)
