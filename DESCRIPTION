@@ -1,0 +1,39 @@
+Package: CorAge
+Type: Package
+Title: CorAge: An R package for simulating age-based COVID scenarios
+Version: 0.1.3
+Date: 2020-3-17
+Authors@R: 
+    person("Paul", "Cross", role = c("aut","cre"),
+    email = "paulchafeecross@gmail.com",
+    comment=c(ORCID="0000-0001-8045-5213"))
+Maintainer: Paul Cross <paulchafeecross@gmail.com>
+Description: Collections of functions to run an interactive Shiny application
+   of COVID disease models. The model is an age structured SEIR model.
+License: CC0
+Copyright: This software is in the public domain.
+Depends:
+    R (>= 3.4)
+Imports:
+    cowplot (>= 1.0.0),
+    dplyr (>= 0.8.3),
+    forcats (>= 0.4.0),
+    ggplot2 (>= 3.0.0),
+    ggridges (>= 0.5.0),
+    knitr (>= 1.25),
+    magrittr (>= 1.2),
+    markdown (>= 1.0),
+    plyr (>= 1.8.0),
+    popbio (>= 2.0),
+    reshape2 (>= 1.4.0),
+    shiny (>= 1.3.0),
+    shinydashboard (>= 0.7.0),
+    tidyr (>= 1.0.0),
+    stringr (>= 1.4.0)
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
+VignetteBuilder: knitr
+Suggests:
+    rmarkdown,
+    remotes
