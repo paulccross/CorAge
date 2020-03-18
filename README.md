@@ -16,6 +16,17 @@ This is mostly a copy-paste from a chronic wasting disease model, so apologies i
 5. add in different interventions by age and time  
 6. stochastic version?  
 
+### Web Shiny App is available here ###
+
+https://paulchafeecr.shinyapps.io/CorAge_app/
+
+Otherwise install the R package and run it locally using the following command: 
+
+```
+launchApp("app")
+```
+
+
 ### Installation ###
 
 To use this package, you should be using R 3.4+. You can install the package from github using the `remotes` package. Haven't yet built any vignettes. Working on shiny app first
