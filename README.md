@@ -34,6 +34,7 @@ You should then be able to load it with
 ```
 library(CorAge)
 ```
+
 ### Disclaimer ###
 
 This is very preliminary. The default parameters are not formally estimated in any way, but just entered in a reasonable range to see if the functions are working. I'm doing this on non-work time, so you can reach me here: paulchafeecross@gmail.com
