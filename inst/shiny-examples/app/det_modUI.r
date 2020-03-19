@@ -27,7 +27,8 @@ det_modUI <- function(id) {
                        sliderInput(ns("i.move"), "Infectious progression",
                                    value = .8, min = .1, max = .99, step = .01),
                        sliderInput(ns("theta"), "FD = 1 vs DD = 0 transmission",
-                                   value = 1, min = 0, max = 1, step = 0.1)
+                                   value = 1, min = 0, max = 1, step = 0.1),
+                       includeText("disease_text.txt")
                       ),
               tabPanel("Severity",
                       sliderInput(ns("s.lo"), "% severe cases in sub-adults",
@@ -39,8 +40,9 @@ det_modUI <- function(id) {
                       sliderInput(ns("d.yes"), "Daily mortality of hospitalized severe cases",
                                   value = 0.01, min = 0, max = .1, step = 0.01),
                       sliderInput(ns("beds"),"Number of beds for severe cases",
-                                  value = 30, min = 10, max = 1000, step = 10)
-                      ),
+                                  value = 30, min = 10, max = 1000, step = 10),
+                      includeText("severity_text.txt")
+              ),
               tabPanel("Simulation",
                        sliderInput(ns("n0"),"Initial population size",
                                    value = 100000, min = 1000, max = 500000,step = 1000),
@@ -49,8 +51,10 @@ det_modUI <- function(id) {
                        sliderInput(ns("ini.prev"), "Initial prevalence",
                                    value = 0.001, min = 0.001, max = 0.05, step = 0.001),
                        sliderInput(ns("n.age.cats"), "Number of age categories",
-                                   value = 10, min = 7, max = 10, step = 1)
-                    )
+                                   value = 10, min = 7, max = 10, step = 1),
+                       includeText("simulation_text.txt")
+                       
+                   )
             )),
      column(width = 8, h4("Plots"),
             tabsetPanel(
