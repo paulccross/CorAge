@@ -18,7 +18,7 @@ This is mostly a copy-paste from a chronic wasting disease model, so apologies i
 
 ### Web Shiny App is available here ###
 
-https://paulchafeecr.shinyapps.io/CorAge_app/
+https://paulccross.shinyapps.io/CorAge_app/
 
 Otherwise install the R package and run it locally using the following command: 
 
