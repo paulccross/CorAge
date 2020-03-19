@@ -17,15 +17,15 @@ det_modUI <- function(id) {
             tabsetPanel(
               tabPanel("Disease",
                        sliderInput(ns("beta"), "transmission coefficient",
-                                   value = 0.4, min = 0, max = 0.7, step = 0.01),
+                                   value = 0.34, min = 0, max = 0.7, step = 0.01),
                        sliderInput(ns("n.e.cats"), "Exposed subcategories",
-                                   value = 5, min = 3, max = 10, step = 1),
+                                   value = 6, min = 3, max = 10, step = 1),
                        sliderInput(ns("n.i.cats"), "Infectious subcategories",
-                                   value = 5, min = 3, max = 10, step = 1),
+                                   value = 4, min = 3, max = 10, step = 1),
                        sliderInput(ns("e.move"), "Exposed progression",
-                                   value = .95, min = .1, max = .99, step = .01),
+                                   value = .99, min = .1, max = .99, step = .01),
                        sliderInput(ns("i.move"), "Infectious progression",
-                                   value = .9, min = .1, max = .99, step = .01),
+                                   value = .8, min = .1, max = .99, step = .01),
                        sliderInput(ns("theta"), "FD = 1 vs DD = 0 transmission",
                                    value = 1, min = 0, max = 1, step = 0.1)
                       ),
@@ -47,7 +47,7 @@ det_modUI <- function(id) {
                        sliderInput(ns("n.days"),"# of days",
                                    value = 360, min = 30, max = 1000, step = 10),
                        sliderInput(ns("ini.prev"), "Initial prevalence",
-                                   value = 0.01, min = 0.01, max = 0.4, step = 0.01),
+                                   value = 0.001, min = 0.001, max = 0.05, step = 0.001),
                        sliderInput(ns("n.age.cats"), "Number of age categories",
                                    value = 10, min = 7, max = 10, step = 1)
                     )

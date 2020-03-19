@@ -153,13 +153,13 @@ det_model <- function(params) {
   # for tracking purposes
   Dt <- tmp # disease deaths
   Ht <- tmp  # hospitalizations 
-  
+ 
   # Intializing with the stable age distribution.
-  St[, 1] <- popbio::stable.stage(M)[1:n.age.cats] * n0 * (1 - ini.prev)
+  St[, 1] <- popbio::stable.stage(M) * n0 * (1 - ini.prev)
 
-  # equally allocating prevalence across ages, but only in I not E.
-  It[, 1, 1:n.i.cats] <- popbio::stable.stage(M)[1:n.age.cats] * n0/n.i.cats *
-    ini.prev
+  # equally allocating prevalence across ages, 
+  # currently putting them in the 1st I category
+  It[, 1, 1] <- popbio::stable.stage(M) * n0 * ini.prev
 
   # calculate R0 (not sure about this)
   R0 <- (1-exp (-(beta * n0) / n0^theta)) * 
