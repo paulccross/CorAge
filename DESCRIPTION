@@ -29,6 +29,7 @@ Imports:
     shiny (>= 1.3.0),
     shinydashboard (>= 0.7.0),
     tidyr (>= 1.0.0),
+    tibble,
     stringr (>= 1.4.0)
 Encoding: UTF-8
 LazyData: true
