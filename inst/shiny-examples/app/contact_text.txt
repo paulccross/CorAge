@@ -1,0 +1,1 @@
+If all the contact rates among different ages are set to one, then contact rates are equal. Above or below 1 indicates higher or lower contact rates, respectively. A contact rate of 0.5 would be 50% less than the base contact rates, while a value of 2 would be 2 times higher. The entire contact rate matrix can be reduced X% using the reduction parameter.

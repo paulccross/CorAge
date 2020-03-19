@@ -1,0 +1,1 @@
+Setting transmission and contact rate parameters such that the number recovered is approximately equal to those susceptible would relate to an R0 of about 2. 

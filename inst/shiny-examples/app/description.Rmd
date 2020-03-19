@@ -3,10 +3,9 @@
 
 This application is a decision-support tool for those investigating different scenarios associated with COVID-19. This tool allows the user to enter parameters for disease transmission, contact and mortality rates, and the model will plot the total number of individuals, prevalence, age distribution, and how many deaths and hospitalizations occurred.    
 
+The underlying model is a discrete-time and age-based model with a daily timestep. The order of operations in the model is as follows: move forward in the E and I subcategories, disease recovery, transmission, and disease mortality
 
 ### User inputs  
-
-NOTE: needs lots more work
 
 *Table 1. Parameters included in the models*
 
@@ -17,27 +16,30 @@ NOTE: needs lots more work
 |                | Infectious | $I_{a,t,j}$ | It | $j$ = infectious sub-category |
 |                | Recovered | $R_{a,t}$ | Rt |  |
 | |  | |  | |
-|                | transmission coefficient | $\beta$ | beta = 0.08 | direct transmission |
+|Disease parameters  | transmission coefficient | $\beta$ | beta = 0.34 | direct transmission |
+|                | transmission exponent | $\theta$ | theta = 1 | frequency or density dependent= 1 or 0 |
+| | # of exposed sub categories | | n.e.cats = 6 | range = [3,10]|
+| | # of infectious sub categories | | n.e.cats = 4 | range = [3,10] |
+| | movement rate is exposed sub-cat. | | e.move = .99 | range = [.1,.99]|
+| | # of infectious sub categories | | i.move = 0.8 | range = [.1,.99] |
+| | Contact matrix | | contacts = matrix of 1s | range = [.1,5] |
+| | disease severity | | severity = vector of length $a$ | % of cases by age that require hospital care |
+| | death rate in hospital | | d.yes = 0.02  | only severe cases go to the hospital |
+| | death rate out of hospital | | d.no = 0.1  | for severe cases only |
 | |  | |  | |
 | Intitial conditions | prevalence | | ini.prev = 0.01 | prevalence at the start of the simulation.
 | | population size | | n0 = 100000 | |
 | | # of days | | n.days = 360| # of years to run the simulation |
-
-MORE HERE NEEDED
-
+| | # of age categories | | n.age.cats = 10 | |
 
 *Disease parameters*
 
-The direct transmission rate is proportional to $\beta SI$, where $\beta$ is the transmission coefficient, $I$ and $N$ are the number of infectious individuals and the total number of individuals.
+The direct transmission rate is proportional to $S(1-exp(-\beta I/N^\theta))$, where $\beta$ is the transmission coefficient, $I$ and $N$ are the number of infectious individuals and the total number of individuals. $\theta$ controls whether disease transmission is a function of the overall population size. This disease transmission rate is multiplied by a who-contacts-who matrix.
 
 A constant rate per time step results in a negative binomial distribution of time until the event. We used a box-car modeling approach to create a bell-shaped distibution of time in the exposed and infectious categories. In the box-car approach the infected category is divided into a number of identical sub-categories that an individual must pass through prior to disease-induced mortality occurring. The rate of movement from one sub category to the next then determines the time in the E or I class. 
 
 *Simulation parameters*
 
 Finally, the initial conditions for prevalence, population size and number of days to run the simulation are available in the simulations tab. 
-
-### Model Structure
-
-The underlying model is a discrete time model with a daily timestep. The order of operations in the model is as follows: move forward in the E and I subcategories, disease recovery, transmission, and disease mortality
 
 *Contact:* For technical assistance or to report outages, please contact paulchafeecross@gmail.com

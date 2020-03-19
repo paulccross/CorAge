@@ -26,9 +26,7 @@ det_modUI <- function(id) {
                                    value = .99, min = .1, max = .99, step = .01),
                        sliderInput(ns("i.move"), "Infectious progression",
                                    value = .8, min = .1, max = .99, step = .01),
-                       sliderInput(ns("theta"), "FD = 1 vs DD = 0 transmission",
-                                   value = 1, min = 0, max = 1, step = 0.1),
-                       includeText("disease_text.txt")
+                      includeText("disease_text.txt")
                       ),
               tabPanel("Severity",
                       sliderInput(ns("s.lo"), "% severe cases in sub-adults",
@@ -43,6 +41,19 @@ det_modUI <- function(id) {
                                   value = 30, min = 10, max = 1000, step = 10),
                       includeText("severity_text.txt")
               ),
+              tabPanel("Contacts",
+                       sliderInput(ns("k.k.c"), "kid to kid contacts",
+                                   value = 3, min = 1, max = 5, step = 0.1),
+                       sliderInput(ns("a.a.c"), "adult to adult contacts",
+                                   value = 1.5, min = 1, max = 5, step = 0.1),
+                       sliderInput(ns("eld.c"), ">70y contacts",
+                                   value = .5, min = .1, max = 1, step = 0.1),
+                       sliderInput(ns("k.a.c"), "kid to adult contacts",
+                                   value = 2, min = 1, max = 5, step = 0.1),
+                       sliderInput(ns("red.c"), "Contact reduction overall",
+                                   value = 0, min = 0, max = 1, step = 0.1),
+                       includeText("contact_text.txt")
+              ),
               tabPanel("Simulation",
                        sliderInput(ns("n0"),"Initial population size",
                                    value = 100000, min = 1000, max = 500000,step = 1000),
@@ -50,25 +61,30 @@ det_modUI <- function(id) {
                                    value = 360, min = 30, max = 1000, step = 10),
                        sliderInput(ns("ini.prev"), "Initial prevalence",
                                    value = 0.001, min = 0.001, max = 0.05, step = 0.001),
-                       sliderInput(ns("n.age.cats"), "Number of age categories",
-                                   value = 10, min = 7, max = 10, step = 1),
                        includeText("simulation_text.txt")
                        
                    )
             )),
      column(width = 8, h4("Plots"),
             tabsetPanel(
-              tabPanel("Totals", plotOutput(ns('TotalPlot'))),
+              tabPanel("Totals", plotOutput(ns('TotalPlot')), hr(), 
+                       includeText("totals_text.txt"), hr()),
 
-              tabPanel("Infectious Cases", plotOutput(ns('CasesPlot'))),
+              tabPanel("Infectious Cases", plotOutput(ns('CasesPlot')), hr(),
+                       includeText("cases_text.txt"), hr()),
               
               tabPanel("Needed hospitalizations", plotOutput(ns('HospitalPlot'))),
               
               tabPanel("Deaths", plotOutput(ns('DeathsPlot'))),
               
-              tabPanel("Emergent Parameters", plotOutput(ns('ParamPlot'))),
+              tabPanel("Emergent Parameters", plotOutput(ns('ParamPlot')), hr(),
+                       includeText("emergent_text.txt"), hr()),
+
+              tabPanel("Contacts", plotOutput(ns('ContactPlot')), hr(),
+                       includeText("contacts_plot_text.txt"), hr()),
               
-              tabPanel("Age Distribution", plotOutput(ns('AgePlot')))
+              tabPanel("Age Distribution", plotOutput(ns('AgePlot')), hr(),
+                       includeText("age_text.txt"), hr())
               
               ),
             includeMarkdown("disclaimer.md")

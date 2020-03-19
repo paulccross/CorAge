@@ -45,9 +45,8 @@ plot_exposed_age_end <- function(dat){
   # prevalence by age
   ggplot(dat.sum, aes(x = age, y = exposed)) +
     geom_line(size = 1.5) + ylim(0,1) +
-    ylab("") + xlab("Age category") +
-    theme_light()  + theme(text = element_text(size = 18),
+    ylab("% exposed") + xlab("Age category") +
+    theme_light()  + theme(text = element_text(size = 16),
                            panel.grid.minor = element_blank(),
-                           panel.grid.major = element_blank(),
-                           legend.position = c(.25,.85))
+                           panel.grid.major = element_blank())
 }
