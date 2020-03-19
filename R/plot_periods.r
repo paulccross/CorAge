@@ -39,6 +39,6 @@ plot_periods <- function(e.move, i.move, n.e.cats, n.i.cats){
         geom_density_ridges() + theme_ridges() + ylab("") + xlab("days") + 
         scale_y_discrete(labels = c("exposure period",
                                 "infectious period")) +
-    theme_set(theme_bw(base_size = 16))  
+    theme_bw(base_size = 16)  
   p
 }
