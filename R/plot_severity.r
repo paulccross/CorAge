@@ -10,7 +10,7 @@
 #'
 #' @import ggplot2
 #' @examples
-#' plot_severity(s.lo = 0.01, s.hi = 0.2, n.age.cats = 10)
+#' plot_severity(s.lo = 0.0001, s.hi = 0.2, n.age.cats = 10)
 #' 
 #' @export
 

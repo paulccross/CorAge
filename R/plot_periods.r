@@ -16,7 +16,7 @@
 #' @importFrom stats rgamma
 #' @importFrom tidyr gather
 #' @examples
-#' plot_periods(e.move = 0.95, i.move = 0.95, n.e.cats = 5, n.i.cats = 3)
+#' plot_periods(e.move = 0.99, i.move = 0.99, n.e.cats = 6, n.i.cats = 5)
 #' 
 #' @export
 
@@ -37,7 +37,7 @@ plot_periods <- function(e.move, i.move, n.e.cats, n.i.cats){
   
   p <- ggplot(periods.2, aes(x = value, y = parameter)) +
         geom_density_ridges() + theme_ridges() + ylab("") + xlab("days") + 
-        scale_y_discrete(labels = c("exposure period",
+        scale_y_discrete(labels = c("incubation period",
                                 "infectious period")) +
     theme_bw(base_size = 16)  
   p
